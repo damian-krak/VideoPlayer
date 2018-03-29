@@ -39,6 +39,9 @@ namespace VideoPlayer40
 
         private Panel panel;
 
+        
+        public event Action PlayerCompleted;
+
         public DSPlayer()
         {
             InitializeComponent();
@@ -240,6 +243,10 @@ namespace VideoPlayer40
                 if (evCode == EventCode.Complete)
                 {
                     mediaControl.Stop();
+                    FilterGraphTools.RemoveAllFilters(graphBuilder);
+                    CloseInterfaces();
+
+                    OnPlayerCompleted();
                 }
             }
         }
@@ -440,6 +447,12 @@ namespace VideoPlayer40
         private void panel_DoubleClick(object sender, System.EventArgs e)
         {
             ToggleFullScreen();
+        }
+
+        protected virtual void OnPlayerCompleted()
+        {
+            var handler = PlayerCompleted;
+            if (handler != null) handler(); 
         }
     }
 }

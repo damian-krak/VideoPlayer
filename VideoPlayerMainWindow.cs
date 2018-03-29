@@ -21,6 +21,7 @@ namespace VideoPlayer40
 
         private void VideoPlayerMainWindow_Load(object sender, EventArgs e)
         {
+            dsPlayer.PlayerCompleted += Application.Exit;
             dsPlayer.OpenURL(url);
         }
     }
